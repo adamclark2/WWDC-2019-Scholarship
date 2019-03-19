@@ -3,21 +3,15 @@ import SpriteKit
 import PlaygroundSupport
 import Foundation
 
-var str = "Hello, playground"
-
 let theView = SKView(frame: CGRect(x:0 , y:0, width: 480, height: 640))
 theView.showsFPS = true;
-theView.preferredFramesPerSecond = 35;
+theView.preferredFramesPerSecond = 30;
 theView.isPaused = false;
-
 PlaygroundPage.current.liveView = theView as NSView
 
-let sc = HomeScreenController.init(fileNamed: "HomeScreen")
-let play = sc?.childNode(withName: "play")
 
+let sc:HomeScreenController? = HomeScreenController.init(fileNamed: "HomeScreen")
+if(sc == nil){
+    print("HomeScreenController is Null, this probably means HomeScreen.sks can't be found...")
+}
 theView.presentScene(sc)
-
-
-//let mvc = MainViewController(sceneView: theView)
-//mvc.present()
-
