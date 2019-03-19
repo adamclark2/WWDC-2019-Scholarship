@@ -4,7 +4,7 @@ import PlaygroundSupport
 import Foundation
 
 public class HomeScreenController : SKScene {
-    private var buttons: [SKLabelNode]?;
+    private var buttons: [SKNode]?;
     private var callTable: [(btnName: String, function: (HomeScreenController) -> Void)] = [
         (btnName: "play", function: HomeScreenController.doPlay),
         (btnName: "what", function: HomeScreenController.doWhat),
@@ -13,19 +13,26 @@ public class HomeScreenController : SKScene {
     
     private var aboutAdam: AboutAdamController?;
     private var whatIs: WhatIsController?;
-
+    private var guessingGame: GuessingGameController?;
+    
     override public func sceneDidLoad() {
         // Init goes here
-        let play = self.childNode(withName: "play") as! SKLabelNode;
-        let what = self.childNode(withName: "what") as! SKLabelNode;
-        let about = self.childNode(withName: "aboutAdam") as! SKLabelNode;
-        buttons = [play, what, about]
-        
+        let play = self.childNode(withName: "play");
+        let what = self.childNode(withName: "what");
+        let about = self.childNode(withName: "aboutAdam");
         self.aboutAdam = AboutAdamController(fileNamed: "About")
-        self.aboutAdam!.setHomeScreen(home: self)
-        
         self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
+        self.guessingGame = GuessingGameController(fileNamed: "GuessingGame")
+        
+        let checkArray: [SKNode?] = [
+            play, what, about, aboutAdam, whatIs, guessingGame
+        ]
+        checkArrayForNil(errMsg: "HomeScreenController has a nil", checkArray: checkArray)
+        
+        buttons = [play!, what!, about!]
         self.whatIs!.setHomeScreen(home: self)
+        self.aboutAdam!.setHomeScreen(home: self)
+        self.guessingGame!.setHomeScreen(home: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
@@ -46,20 +53,23 @@ public class HomeScreenController : SKScene {
         }
     }
     
+    public static func transitionTo(scene: SKScene, view: SKView?){
+        let doorsClose = SKTransition.doorsCloseVertical(withDuration: 0.5)
+        view!.presentScene(scene, transition: doorsClose)
+    }
+    
     public static func doPlay(this: HomeScreenController){
-        print("PLAY")
+        HomeScreenController.transitionTo(scene: this.guessingGame!, view: this.view)
     }
     
     public static func doWhat(this: HomeScreenController){
-        let doorsClose = SKTransition.doorsCloseVertical(withDuration: 2.0)
-        this.whatIs?.setHomeScreen(home: this)
-        this.view!.presentScene(this.whatIs!, transition: doorsClose)
+        //this.whatIs?.setHomeScreen(home: this)
+        HomeScreenController.transitionTo(scene: this.whatIs!, view: this.view)
     }
     
     public static func doAboutAdam(this: HomeScreenController){
-        let doorsClose = SKTransition.doorsCloseVertical(withDuration: 2.0)
         this.aboutAdam?.setHomeScreen(home: this)
-        this.view!.presentScene(this.aboutAdam!, transition: doorsClose)
+        HomeScreenController.transitionTo(scene: this.aboutAdam!, view: this.view)
     }
     
     /*

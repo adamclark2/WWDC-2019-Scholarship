@@ -6,7 +6,7 @@ import Foundation
 public class AboutAdamController : SKScene {
     
     private var clickDetector: ClickDetector<AboutAdamController> = ClickDetector()
-    private var buttons: [SKLabelNode]?;
+    private var buttons: [SKNode]?;
     private var callTable: [(btnName: String, function: (AboutAdamController) -> Void)] = [
         (btnName: "back", function: AboutAdamController.doBack),
     ]
@@ -19,8 +19,12 @@ public class AboutAdamController : SKScene {
     
     override public func sceneDidLoad() {
         // Init goes here
-        let back = self.childNode(withName: "back") as! SKLabelNode;
-        buttons = [back];
+        let back = self.childNode(withName: "back");
+        if(back == nil){
+            print("AboutAdamController back is nil")
+            exit(1)
+        }
+        buttons = [back!];
     }
     
     public override func mouseDown(with event: NSEvent) {
