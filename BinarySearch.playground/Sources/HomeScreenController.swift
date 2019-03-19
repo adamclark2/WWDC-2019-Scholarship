@@ -12,6 +12,7 @@ public class HomeScreenController : SKScene {
     ]
     
     private var aboutAdam: AboutAdamController?;
+    private var whatIs: WhatIsController?;
 
     override public func sceneDidLoad() {
         // Init goes here
@@ -22,6 +23,9 @@ public class HomeScreenController : SKScene {
         
         self.aboutAdam = AboutAdamController(fileNamed: "About")
         self.aboutAdam!.setHomeScreen(home: self)
+        
+        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
+        self.whatIs!.setHomeScreen(home: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
@@ -47,7 +51,9 @@ public class HomeScreenController : SKScene {
     }
     
     public static func doWhat(this: HomeScreenController){
-        print("What")
+        let doorsClose = SKTransition.doorsCloseVertical(withDuration: 2.0)
+        this.whatIs?.setHomeScreen(home: this)
+        this.view!.presentScene(this.whatIs!, transition: doorsClose)
     }
     
     public static func doAboutAdam(this: HomeScreenController){

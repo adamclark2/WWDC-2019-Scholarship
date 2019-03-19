@@ -3,17 +3,22 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=438&amp;CharacterRangeLoc=73&amp;EndingColumnNumber=0&amp;EndingLineNumber=17&amp;StartingColumnNumber=17&amp;StartingLineNumber=3&amp;Timestamp=574701892.457669"
+         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=438&amp;CharacterRangeLoc=73&amp;EndingColumnNumber=0&amp;EndingLineNumber=17&amp;StartingColumnNumber=17&amp;StartingLineNumber=3&amp;Timestamp=574710128.145597"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=241&amp;CharacterRangeLoc=270&amp;EndingColumnNumber=0&amp;EndingLineNumber=17&amp;StartingColumnNumber=33&amp;StartingLineNumber=9&amp;Timestamp=574701892.457816"
+         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=241&amp;CharacterRangeLoc=270&amp;EndingColumnNumber=0&amp;EndingLineNumber=17&amp;StartingColumnNumber=33&amp;StartingLineNumber=9&amp;Timestamp=574710128.145862"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=222&amp;CharacterRangeLoc=288&amp;EndingColumnNumber=24&amp;EndingLineNumber=16&amp;StartingColumnNumber=51&amp;StartingLineNumber=9&amp;Timestamp=574701892.457939"
+         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=222&amp;CharacterRangeLoc=288&amp;EndingColumnNumber=24&amp;EndingLineNumber=16&amp;StartingColumnNumber=51&amp;StartingLineNumber=9&amp;Timestamp=574710128.146005"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/adam/College/2018-2019%20SR/Spring/WWDC-2019-Scholorship/BinarySearch.playground#CharacterRangeLen=82&amp;CharacterRangeLoc=291&amp;EndingColumnNumber=0&amp;EndingLineNumber=13&amp;StartingColumnNumber=0&amp;StartingLineNumber=12&amp;Timestamp=574710128.14614"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>

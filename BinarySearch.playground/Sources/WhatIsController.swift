@@ -3,13 +3,13 @@ import SpriteKit
 import PlaygroundSupport
 import Foundation
 
-public class AboutAdamController : SKScene {
+public class WhatIsController : SKScene {
     
-    private var clickDetector: ClickDetector<AboutAdamController> = ClickDetector()
+    private var clickDetector: ClickDetector<WhatIsController> = ClickDetector()
     private var buttons: [SKLabelNode]?;
-    private var callTable: [(btnName: String, function: (AboutAdamController) -> Void)] = [
-        (btnName: "back", function: AboutAdamController.doBack),
-    ]
+    private var callTable: [(btnName: String, function: (WhatIsController) -> Void)] = [
+        (btnName: "back", function: WhatIsController.doBack),
+        ]
     
     private var homeScreen: HomeScreenController?;
     
@@ -27,7 +27,7 @@ public class AboutAdamController : SKScene {
         self.clickDetector.detectClick(event: event, view: view!, this: self, buttons: self.buttons!, callTable: self.callTable);
     }
     
-    public static func doBack(this: AboutAdamController){
+    public static func doBack(this: WhatIsController){
         let doorsClose = SKTransition.doorsCloseVertical(withDuration: 1.0)
         this.view!.presentScene(this.homeScreen!, transition: doorsClose)
     }
