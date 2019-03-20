@@ -6,7 +6,6 @@ import Foundation
 public class WhatIsController : SKScene {
     
     private var clickDetector: ClickDetector<WhatIsController> = ClickDetector()
-    private var buttons: [SKNode]?;
     private var callTable: [(btnName: String, function: (WhatIsController) -> Void)] = [
         (btnName: "back", function: WhatIsController.doBack),
     ]
@@ -24,11 +23,10 @@ public class WhatIsController : SKScene {
             print("WhatIsController back button is nil");
             exit(1)
         }
-        buttons = [back!];
     }
     
     public override func mouseDown(with event: NSEvent) {
-        self.clickDetector.detectClick(event: event, view: view!, this: self, buttons: self.buttons!, callTable: self.callTable);
+        self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
  
     public static func doBack(this: WhatIsController){

@@ -5,7 +5,6 @@ import Foundation
 
 public class GuessingGameController: SKScene {
     private var clickDetector: ClickDetector<GuessingGameController> = ClickDetector()
-    private var buttons: [SKNode]?;
     private var callTable: [(btnName: String, function: (GuessingGameController) -> Void)] = [
         (btnName: "mainMenu", function: GuessingGameController.doMainMenu),
         (btnName: "tryAgain", function: GuessingGameController.doTryAgain),
@@ -56,17 +55,11 @@ public class GuessingGameController: SKScene {
         ]
         
         checkArrayForNil(errMsg: "Somthing in GuessingGameController is nil", checkArray: checkArray);
-        
-        buttons = [menu!,button1!, button2!, button3!, button4!,
-                   mainMenuLost!, tryAgainLost!,
-                   mainMenuWon!, tryAgainWon!
-        ];
-        
         GuessingGameController.doTryAgain(this: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
-        self.clickDetector.detectClickWithHiddenElements(event: event, view: view!, this: self, buttons: self.buttons!, callTable: self.callTable);
+        self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
     
     public static func doMainMenu(this: GuessingGameController){

@@ -4,7 +4,6 @@ import PlaygroundSupport
 import Foundation
 
 public class HomeScreenController : SKScene {
-    private var buttons: [SKNode]?;
     private var callTable: [(btnName: String, function: (HomeScreenController) -> Void)] = [
         (btnName: "play", function: HomeScreenController.doPlay),
         (btnName: "what", function: HomeScreenController.doWhat),
@@ -14,6 +13,8 @@ public class HomeScreenController : SKScene {
     private var aboutAdam: AboutAdamController?;
     private var whatIs: WhatIsController?;
     private var guessingGame: GuessingGameController?;
+    
+    private var clickDetector: ClickDetector<HomeScreenController> = ClickDetector()
     
     override public func sceneDidLoad() {
         // Init goes here
@@ -29,28 +30,13 @@ public class HomeScreenController : SKScene {
         ]
         checkArrayForNil(errMsg: "HomeScreenController has a nil", checkArray: checkArray)
         
-        buttons = [play!, what!, about!]
         self.whatIs!.setHomeScreen(home: self)
         self.aboutAdam!.setHomeScreen(home: self)
         self.guessingGame!.setHomeScreen(home: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
-        let eventPos: NSPoint = view!.convert(event.locationInWindow, to: view!.scene!)
-        
-        // Look through the button list to see if there is a collision
-        // If there is then look through the function table to find somthing
-        // to call
-        for (_, btn) in buttons!.enumerated() {
-            let rect: CGRect = btn.calculateAccumulatedFrame()
-            if(self.isPointInBox(point: eventPos, box: rect)){
-                for (_, callable) in callTable.enumerated() {
-                    if(callable.btnName == btn.name){
-                        callable.function(self);
-                    }
-                }
-            }
-        }
+        self.clickDetector.detectClick(event: event, view: self.view, this: self, callTable: self.callTable)
     }
     
     public static func transitionTo(scene: SKScene, view: SKView?){
@@ -70,21 +56,5 @@ public class HomeScreenController : SKScene {
     public static func doAboutAdam(this: HomeScreenController){
         this.aboutAdam?.setHomeScreen(home: this)
         HomeScreenController.transitionTo(scene: this.aboutAdam!, view: this.view)
-    }
-    
-    /*
-        Tell if a point is in the box.
-        This code assumes the origin is in the upper left
-        hand corner
-    */
-    private func isPointInBox(point: NSPoint, box: CGRect) -> Bool{
-        if(box.minX <= point.x && box.minY <= point.y){
-            if(point.x < (box.minX + box.width)){
-                if(point.y < (box.minY + box.height)){
-                    return true;
-                }
-            }
-        }
-    return false;
     }
 }
