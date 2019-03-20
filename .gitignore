@@ -6,3 +6,9 @@ xcuserdata
 *.swp
 *~.nib
 build/
+
+# VS Code
+.vscode/
+
+# binaries made by swiftc
+*.o
