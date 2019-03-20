@@ -114,6 +114,14 @@ public class GuessingGameModel {
             }
         }
     }
+    
+    public func getMinRange() -> Int{
+        return self.minRange
+    }
+    
+    public func getMaxRange() -> Int{
+        return self.maxRange;
+    }
 
     public func getPreviousGuesses() -> [String] {
         return self.previousGuesses.map{String($0)};
@@ -134,7 +142,7 @@ public class GuessingGameModel {
 }
 
 // Uncomment this to run test in CLI
-
+/*
 let guessGame = GuessingGameModel()
 guessGame.doCommandLineTest()
-
+*/

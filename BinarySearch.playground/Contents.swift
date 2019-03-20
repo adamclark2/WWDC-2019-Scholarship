@@ -9,14 +9,11 @@ theView.preferredFramesPerSecond = 30;
 theView.isPaused = false;
 PlaygroundPage.current.liveView = theView as NSView
 
-/*
+
 let sc:HomeScreenController? = HomeScreenController.init(fileNamed: "HomeScreen")
 if(sc == nil){
     print("HomeScreenController is Null, this probably means HomeScreen.sks can't be found...")
     exit(1)
 }
 theView.presentScene(sc)
- */
 
-let gg = GuessingGameModel()
-gg.doCommandLineTest()
