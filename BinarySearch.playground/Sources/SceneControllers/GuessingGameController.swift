@@ -125,6 +125,7 @@ public class GuessingGameController: SKScene {
     public static func doButton1(this: GuessingGameController){
         this.model.doGuess(index: 1)
         syncModel(this: this)
+        
     }
     
     public static func doButton2(this: GuessingGameController){

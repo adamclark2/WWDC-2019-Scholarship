@@ -22,7 +22,7 @@ public class HomeScreenController : SKScene {
         let what = self.childNode(withName: "what");
         let about = self.childNode(withName: "aboutAdam");
         self.aboutAdam = AboutAdamController(fileNamed: "About")
-        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
+        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
         self.guessingGame = GuessingGameController(fileNamed: "GuessingGame")
         
         let checkArray: [SKNode?] = [
@@ -49,7 +49,12 @@ public class HomeScreenController : SKScene {
     }
     
     public static func doWhat(this: HomeScreenController){
-        //this.whatIs?.setHomeScreen(home: this)
+        this.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
+        this.whatIs?.setHomeScreen(home: this)
+        if(this.whatIs == nil){
+            print("An unknown error happened where a controller couldn't be loaded\nWas WhatIsBinarySearch/WhatIsBinarySearch.sks removed from disk?\n\n")
+            exit(1)
+        }
         HomeScreenController.transitionTo(scene: this.whatIs!, view: this.view)
     }
     
