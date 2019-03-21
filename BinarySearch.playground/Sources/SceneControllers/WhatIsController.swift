@@ -6,7 +6,7 @@ import Foundation
 public class WhatIsController : SKScene {
     
     private var clickDetector: ClickDetector<WhatIsController> = ClickDetector()
-    private var callTable: [(btnName: String, function: (WhatIsController) -> Void)] = [
+    private var callTable: [(btnName: String, function: (WhatIsController) -> () -> Void)] = [
         (btnName: "back", function: WhatIsController.doBack),
         (btnName: "replay", function: WhatIsController.doReplay)
     ]
@@ -31,13 +31,13 @@ public class WhatIsController : SKScene {
         self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
  
-    public static func doBack(this: WhatIsController){
+    public func doBack(){
         let doorsClose = SKTransition.doorsCloseVertical(withDuration: 1.0)
-        this.view!.presentScene(this.homeScreen!, transition: doorsClose)
+        self.view!.presentScene(self.homeScreen!, transition: doorsClose)
     }
     
-    public static func doReplay(this: WhatIsController){
-        this.view!.presentScene(this.homeScreen!)
-        HomeScreenController.doWhat(this: this.homeScreen!)
+    public func doReplay(){
+        self.view!.presentScene(self.homeScreen!)
+        self.homeScreen!.doWhat()
     }
 }

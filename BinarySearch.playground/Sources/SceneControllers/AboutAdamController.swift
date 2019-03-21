@@ -6,8 +6,8 @@ import Foundation
 public class AboutAdamController : SKScene {
     
     private var clickDetector: ClickDetector<AboutAdamController> = ClickDetector()
-    private var callTable: [(btnName: String, function: (AboutAdamController) -> Void)] = [
-        (btnName: "back", function: AboutAdamController.doBack),
+    private var callTable: [(btnName: String, function: (AboutAdamController) -> () -> Void)] = [
+        (btnName: "back", function: AboutAdamController.doBack)
     ]
     
     private var homeScreen: HomeScreenController?;
@@ -29,8 +29,8 @@ public class AboutAdamController : SKScene {
         self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
     
-    public static func doBack(this: AboutAdamController){
+    public func doBack(){
         let doorsClose = SKTransition.doorsCloseVertical(withDuration: 1.0)
-        this.view!.presentScene(this.homeScreen!, transition: doorsClose)
+        self.view!.presentScene(self.homeScreen!, transition: doorsClose)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 // call detectClick on your onMouseDown...
 public class ClickDetector<T: SKScene> {
     
-    func detectClick(event: NSEvent, view: SKView?, this: T, callTable: [(btnName: String, function: (T) -> Void)]){
+    func detectClick(event: NSEvent, view: SKView?, this: T, callTable: [(btnName: String, function: (T) -> () -> Void)]){
         let eventPos: NSPoint = view!.convert(event.locationInWindow, to: view!.scene!)
         let buttons: [SKNode] = this.nodes(at: eventPos)
 
@@ -17,7 +17,7 @@ public class ClickDetector<T: SKScene> {
         for (_, btn) in buttons.enumerated() {
             for (_, callable) in callTable.enumerated() {
                 if(callable.btnName == btn.name){
-                    callable.function(this);
+                    callable.function(this)();
                 }
             }
         }

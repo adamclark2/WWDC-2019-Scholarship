@@ -5,7 +5,7 @@ import Foundation
 
 public class GuessingGameController: SKScene {
     private var clickDetector: ClickDetector<GuessingGameController> = ClickDetector()
-    private var callTable: [(btnName: String, function: (GuessingGameController) -> Void)] = [
+    private var callTable: [(btnName: String, function: (GuessingGameController) -> () -> Void)] = [
         (btnName: "mainMenu", function: GuessingGameController.doMainMenu),
         (btnName: "tryAgain", function: GuessingGameController.doTryAgain),
         
@@ -76,71 +76,71 @@ public class GuessingGameController: SKScene {
         checkArray = [label1, label2, label3, label4]
         checkArrayForNil(errMsg: "GuessingGameController couldn't find labels", checkArray: checkArray)
         
-        GuessingGameController.doTryAgain(this: self)
+        self.doTryAgain()
     }
     
     public override func mouseDown(with event: NSEvent) {
         self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
     
-    public static func doMainMenu(this: GuessingGameController){
-        doTryAgain(this: this)
-        HomeScreenController.transitionTo(scene: this.homeScreen!, view: this.view)
+    public func doMainMenu(){
+        doTryAgain()
+        self.homeScreen!.transitionTo(scene: self.homeScreen!, view: self.view)
     }
     
-    public static func doTryAgain(this: GuessingGameController){
-        this.game!.alpha = 1
-        this.lose!.alpha = 0
-        this.win!.alpha =  0
+    public func doTryAgain(){
+        self.game!.alpha = 1
+        self.lose!.alpha = 0
+        self.win!.alpha =  0
         
-        this.model = GuessingGameModel()
-        GuessingGameController.syncModel(this: this)
+        self.model = GuessingGameModel()
+        self.syncModel()
     }
     
-    private static func syncModel(this: GuessingGameController){
-        if(!this.model.hasWonGame() && !this.model.hasLostGame()){
-            this.game!.alpha = 1
-            this.lose!.alpha = 0
-            this.win!.alpha =  0
-        } else if(this.model.hasLostGame()){
-            this.game!.alpha = 0
-            this.lose!.alpha = 1
-            this.win!.alpha =  0
-        }else if(this.model.hasWonGame()){
-            this.game!.alpha = 0
-            this.lose!.alpha = 0
-            this.win!.alpha =  1
+    private func syncModel(){
+        if(!self.model.hasWonGame() && !self.model.hasLostGame()){
+            self.game!.alpha = 1
+            self.lose!.alpha = 0
+            self.win!.alpha =  0
+        } else if(self.model.hasLostGame()){
+            self.game!.alpha = 0
+            self.lose!.alpha = 1
+            self.win!.alpha =  0
+        }else if(self.model.hasWonGame()){
+            self.game!.alpha = 0
+            self.lose!.alpha = 0
+            self.win!.alpha =  1
         }
         
-        this.label1?.text = String(this.model.getGuess(index: 1))
-        this.label2?.text = String(this.model.getGuess(index: 2))
-        this.label3?.text = String(this.model.getGuess(index: 3))
-        this.label4?.text = String(this.model.getGuess(index: 4))
+        self.label1?.text = String(self.model.getGuess(index: 1))
+        self.label2?.text = String(self.model.getGuess(index: 2))
+        self.label3?.text = String(self.model.getGuess(index: 3))
+        self.label4?.text = String(self.model.getGuess(index: 4))
         
-        this.guessesMade!.text = "Guesses Made:     " + this.model.getPreviousGuesses().joined(separator: ", ")
-        this.rangeLabel!.text = "Between " + String(this.model.getMinRange()) + " to " + String(this.model.getMaxRange())
-        this.numGuesses!.text = String(this.model.getStatistics().numberOfGuessesMade)
+        self.guessesMade!.text = "Guesses Made:     " + self.model.getPreviousGuesses().joined(separator: ", ")
+        self.rangeLabel!.text = "Between " + String(self.model.getMinRange()) + " to " + String(self.model.getMaxRange())
+        self.numGuesses!.text = String(self.model.getStatistics().numberOfGuessesMade)
     }
     
-    public static func doButton1(this: GuessingGameController){
-        this.model.doGuess(index: 1)
-        syncModel(this: this)
+    public func doButton1(){
+        self.model.doGuess(index: 1)
+        syncModel()
         
     }
     
-    public static func doButton2(this: GuessingGameController){
-        this.model.doGuess(index: 2)
-        syncModel(this: this)
+    public func doButton2(){
+        self.model.doGuess(index: 2)
+        syncModel()
     }
     
-    public static func doButton3(this: GuessingGameController){
-        this.model.doGuess(index: 3)
-        syncModel(this: this)
+    public func doButton3(){
+        self.model.doGuess(index: 3)
+        syncModel()
     }
     
-    public static func doButton4(this: GuessingGameController){
-        this.model.doGuess(index: 4)
-        syncModel(this: this)
+    public func doButton4(){
+        self.model.doGuess(index: 4)
+        syncModel()
     }
 }
 

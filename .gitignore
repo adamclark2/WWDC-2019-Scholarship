@@ -12,3 +12,8 @@ build/
 
 # binaries made by swiftc
 *.o
+
+# Files/Folders that might have personal info...
+*.pages
+*.pdf
+Enrollment/

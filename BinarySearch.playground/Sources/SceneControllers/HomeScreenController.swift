@@ -4,7 +4,7 @@ import PlaygroundSupport
 import Foundation
 
 public class HomeScreenController : SKScene {
-    private var callTable: [(btnName: String, function: (HomeScreenController) -> Void)] = [
+    private var callTable: [(btnName: String, function: (HomeScreenController) -> () -> Void)] = [
         (btnName: "play", function: HomeScreenController.doPlay),
         (btnName: "what", function: HomeScreenController.doWhat),
         (btnName: "aboutAdam", function: HomeScreenController.doAboutAdam)
@@ -39,27 +39,27 @@ public class HomeScreenController : SKScene {
         self.clickDetector.detectClick(event: event, view: self.view, this: self, callTable: self.callTable)
     }
     
-    public static func transitionTo(scene: SKScene, view: SKView?){
+    public func transitionTo(scene: SKScene, view: SKView?){
         let doorsClose = SKTransition.doorsCloseVertical(withDuration: 0.5)
         view!.presentScene(scene, transition: doorsClose)
     }
     
-    public static func doPlay(this: HomeScreenController){
-        HomeScreenController.transitionTo(scene: this.guessingGame!, view: this.view)
+    public func doPlay(){
+        self.transitionTo(scene: self.guessingGame!, view: self.view)
     }
     
-    public static func doWhat(this: HomeScreenController){
-        this.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
-        this.whatIs?.setHomeScreen(home: this)
-        if(this.whatIs == nil){
+    public func doWhat(){
+        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
+        self.whatIs?.setHomeScreen(home: self)
+        if(self.whatIs == nil){
             print("An unknown error happened where a controller couldn't be loaded\nWas WhatIsBinarySearch/WhatIsBinarySearch.sks removed from disk?\n\n")
             exit(1)
         }
-        HomeScreenController.transitionTo(scene: this.whatIs!, view: this.view)
+        self.transitionTo(scene: self.whatIs!, view: self.view)
     }
     
-    public static func doAboutAdam(this: HomeScreenController){
-        this.aboutAdam?.setHomeScreen(home: this)
-        HomeScreenController.transitionTo(scene: this.aboutAdam!, view: this.view)
+    public func doAboutAdam(){
+        self.aboutAdam?.setHomeScreen(home: self)
+        self.transitionTo(scene: self.aboutAdam!, view: self.view)
     }
 }
