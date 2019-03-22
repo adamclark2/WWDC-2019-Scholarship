@@ -3,7 +3,15 @@ import SpriteKit
 import PlaygroundSupport
 import Foundation
 
+/**
+A SKScene to control the color game
+
+The color game is where you use binary search to find a color within a set.
+The color set is obviously sorted from lightest to darkest
+*/
 public class ColorGameController: SKScene {
+    
+    /// clickDetector will detect which SKNode is clicked and call the appropreate method in the callTable
     private var clickDetector: ClickDetector<ColorGameController> = ClickDetector()
     private var callTable: [(btnName: String, function: (ColorGameController) -> () -> Void)] = [
         (btnName: "mainMenu", function: ColorGameController.doMainMenu),
@@ -26,6 +34,9 @@ public class ColorGameController: SKScene {
     
     private var hintLabels: [SKLabelNode?]?;
     
+    /**
+    Tell the object the SKScene to go to when back is pressed
+     */
     public func setHomeScreen(home: HomeScreenController){
         self.homeScreen = home;
     }
@@ -61,11 +72,22 @@ public class ColorGameController: SKScene {
         self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
     
+    /**
+    This method is called when the Main Menu button is pressed.
+ 
+    This method will reset the color game for another round then return to the
+    home screen.
+    */
     public func doMainMenu(){
         doPlayAgain()
-        self.homeScreen!.transitionTo(scene: self.homeScreen!, view: self.view)
+        self.homeScreen!.goBackToHomeScreen(view: self.view!)
     }
     
+    /**
+    This method is called when the 'Play Again' or 'Try Again' button(s) are pressed.
+ 
+    This method resets the scene for another game.
+    */
     public func doPlayAgain(){
         self.colorGame = ColorGameModel()
         for (_, label) in self.hintLabels!.enumerated() {
@@ -78,6 +100,14 @@ public class ColorGameController: SKScene {
         self.lost!.alpha = 0;
     }
     
+    /**
+    This method is called indirectly when a button is pressed
+ 
+    This method will update the ColorGameModel with the guess made
+    at index. It will also update the game if the user wins/loses.
+    Also a hint will be shown above the button saying wheather the
+    user needs to guess lighter or darker.
+    */
     private func doBtn(index: Int){
         self.colorGame.doGuess(index: index)
         if(colorGame.hasWonGame()){
@@ -101,22 +131,37 @@ public class ColorGameController: SKScene {
         }
     }
     
+    /**
+    Called when button 1 is pressed. This is the lightest color.
+    */
     public func doBtn1(){
         doBtn(index: 1)
     }
     
+    /**
+     Called when button 2 is pressed.
+     */
     public func doBtn2(){
         doBtn(index: 2)
     }
     
+    /**
+     Called when button 3 is pressed.
+     */
     public func doBtn3(){
         doBtn(index: 3)
     }
     
+    /**
+     Called when button 4 is pressed.
+     */
     public func doBtn4(){
         doBtn(index: 4)
     }
     
+    /**
+     Called when button 1 is pressed. This is the darkest color.
+     */
     public func doBtn5(){
         doBtn(index: 5)
     }

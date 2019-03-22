@@ -2,6 +2,9 @@ import AppKit
 import SpriteKit
 import Foundation
 
+/**
+    The game logic for the Guessing Game 
+ */
 public class GuessingGameModel {
     private var hasLost = false;
     private var hasWon = false;
@@ -13,12 +16,22 @@ public class GuessingGameModel {
     private var buttons: [Int] = [0,0,0,0]
     private var previousGuesses: [Int] = []
 
+    /**
+        Constructor
+    */
     public init(){
         // Random number from 0 to 1000 inclusive
         myNumber = Int.random(in: 0...1000);
         newButtons();
     }
 
+    /**
+        Change the buttons to new values and randomly choose one of the buttons to be right. **INTERNAL USE ONLY**
+     
+        To ensure the user doesn't get board the buttons change each guess. 3 of the buttons are the wrong guess
+        and if the user chooses them then they will lose. If the user chooses the 1 right button they will keep playing
+        untill they lose or they guess right using binary search.
+    */
     private func newButtons(){
         buttons[0] = Int.random(in: 0...1000)
         buttons[1] = Int.random(in: 0...1000)
@@ -30,9 +43,17 @@ public class GuessingGameModel {
         buttons[rightAns] = minRange + delta/2
     }
     
-    // Test the model in the command line
-    // This DOES NOT work in Swift Playgrounds
-    // compile on command line
+    /**
+         A testing method used to play the game on the command line
+         I(Adam) used this to eliminate bugs
+     
+         You can't run this in Swift Playgrounds directly but you can compile
+         it on the command line. To do that
+             1. Un comment the code at the bottom of this file
+             2. swiftc ./GuessingGameModel.swift -o guess.o
+             3. ./guess.o
+             4. if you want to run the swift playground again re-comment the code
+     */
     public func doCommandLineTest(){
         print("Please press enter to run...\n\n")
         var line = readLine()
@@ -49,8 +70,7 @@ public class GuessingGameModel {
         print("Welcome to Guessing Game (test edition)");
         print("I'm thinking of a number between" + String(1) + " " + String(10) + " can you use binary search to find it?\n");
         
-        var done = false;
-        while(!done){
+        while(true){
             print("Choose an option: (enter number & press enter)")
             print("Help: choose a number between " + String(minRange) + " - " + String(maxRange))
             print("Previous guesses: " + getPreviousGuesses().joined(separator:" "))
@@ -86,10 +106,25 @@ public class GuessingGameModel {
         
     }
 
+    /**
+        Get the numerical value of the button at index index
+     
+        Unfortunately this is indexed at 1 because most end-users
+        think of the first button as button #1 instead of button #0
+    */
     public func getGuess(index: Int) -> Int{
         return buttons[(index - 1) % 4]
     }
     
+    /**
+     Hand a guess to the object so that we can change the internal state
+     
+     After calling this you may want to call hasLostGame() hasWonGame()
+     
+     The basic just of this is:
+     - Make a guess
+     - Check if you won or lost
+    */
     public func doGuess(index: Int){
         if(hasLost || hasWon){
             return;
@@ -115,26 +150,60 @@ public class GuessingGameModel {
         }
     }
     
+    /**
+     Get the lower bound of where the number is
+     This number may change as the user makes more guesses
+     */
     public func getMinRange() -> Int{
         return self.minRange
     }
     
+    /**
+        Get the upward bound of where the number is
+        This number may change as the user makes more guesses
+    */
     public func getMaxRange() -> Int{
         return self.maxRange;
     }
 
+    /**
+        Get an array of previous guesses the user made
+    */
     public func getPreviousGuesses() -> [String] {
         return self.previousGuesses.map{String($0)};
     }
 
+    /**
+         returns true if the user has lost the game
+     
+         The user loses the game if they make a guess that
+         isn't apart of the binary search algorithm. Even if the
+         user guesses the right number off the bat they
+         may lose if they didn't use binary search.
+     */
     public func hasLostGame() -> Bool{
         return hasLost
     }
 
+    /**
+        returns true if the user has won the game
+
+        The user wins when they guess the right number
+        using the binary search algorithm. Even if the
+        user guesses the right number off the bat they
+        may lose if they didn't use binary search.
+     */
     public func hasWonGame() -> Bool{
         return hasWon
     }
 
+    /**
+        Get various statistics including
+
+        linearSearchGuesses: The number of guesses the user would have to make using linear search
+        numberOfGuessesMade: The number of guesses the user made
+        logBase2OfMax: The maximum number of guesses the user would have to make using binary search
+    */
     public func getStatistics() -> (linearSearchGuesses: Int, numberOfGuessesMade: Int, logBase2OfMax: Int){
         let logFormula: Int = Int(round(log(1000) / log(2)))
         return (linearSearchGuesses: 1000, numberOfGuessesMade: previousGuesses.count, logBase2OfMax: logFormula)

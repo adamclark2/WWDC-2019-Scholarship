@@ -3,7 +3,15 @@ import SpriteKit
 import PlaygroundSupport
 import Foundation
 
+/**
+ A SKScene to control the Home Screen
+ 
+ The home screen will dispatch to various other scenes to display info & play games
+ */
 public class HomeScreenController : SKScene {
+    
+    /// clickDetector will detect which SKNode is clicked and call the appropreate method in the callTable
+    private var clickDetector: ClickDetector<HomeScreenController> = ClickDetector()
     private var callTable: [(btnName: String, function: (HomeScreenController) -> () -> Void)] = [
         (btnName: "play", function: HomeScreenController.doPlay),
         (btnName: "playColor", function: HomeScreenController.doPlayColor),
@@ -15,8 +23,6 @@ public class HomeScreenController : SKScene {
     private var whatIs: WhatIsController?;
     private var guessingGame: GuessingGameController?;
     private var colorGame: ColorGameController?;
-    
-    private var clickDetector: ClickDetector<HomeScreenController> = ClickDetector()
     
     override public func sceneDidLoad() {
         // Init goes here
@@ -43,19 +49,41 @@ public class HomeScreenController : SKScene {
         self.clickDetector.detectClick(event: event, view: self.view, this: self, callTable: self.callTable)
     }
     
-    public func transitionTo(scene: SKScene, view: SKView?){
+    /**
+        Trsnsitions are used quite a bit so this method saves a line & provides consistancy.
+    */
+    private func transitionTo(scene: SKScene, view: SKView?){
         let doorsClose = SKTransition.doorsCloseVertical(withDuration: 0.5)
         view!.presentScene(scene, transition: doorsClose)
     }
     
+    /**
+        This method is called by supporting SKScenes when they want the homescreen to regain control
+    */
+    public func goBackToHomeScreen(view: SKView){
+        self.transitionTo(scene: self, view: view)
+    }
+    
+    /**
+        This method is called when the 'Play Guessing Game' button is pressed.
+        It transfers control to GuessingGameController
+    */
     public func doPlay(){
         self.transitionTo(scene: self.guessingGame!, view: self.view)
     }
     
+    /**
+     This method is called when the 'Play Color Game' button is pressed.
+     It transfers control to ColorGameController
+     */
     public func doPlayColor(){
         self.transitionTo(scene: self.colorGame!, view: self.view)
     }
     
+    /**
+     This method is called when the 'What is Binary Search' button is pressed.
+     It transfers control to WhatIsController
+     */
     public func doWhat(){
         self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
         self.whatIs?.setHomeScreen(home: self)
@@ -66,6 +94,10 @@ public class HomeScreenController : SKScene {
         self.transitionTo(scene: self.whatIs!, view: self.view)
     }
     
+    /**
+     This method is called when the 'About' button is pressed.
+     It transfers control to AboutAdamController
+     */
     public func doAboutAdam(){
         self.aboutAdam?.setHomeScreen(home: self)
         self.transitionTo(scene: self.aboutAdam!, view: self.view)

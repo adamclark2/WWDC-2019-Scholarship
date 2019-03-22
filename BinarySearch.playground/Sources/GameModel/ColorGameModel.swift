@@ -2,6 +2,9 @@ import AppKit
 import SpriteKit
 import Foundation
 
+/**
+    The game logic for the color guessing game
+ */
 public class ColorGameModel {
     private var hasLost = false;
     private var hasWon = false;
@@ -14,13 +17,27 @@ public class ColorGameModel {
     private var darkerOrLighter = false;
     private var previousGuess = 0;
     
-    public let C_LIIGHER = true;
+    public let C_LIGHTER = true;
     public let C_DARKER = false;
     
+    /**
+        Constructor
+    */
     public init(){
         myNumber = Int.random(in: 1...5)
     }
     
+    /**
+        A testing method used to play the game on the command line
+        I(Adam) used this to eliminate bugs
+     
+        You can't run this in Swift Playgrounds directly but you can compile
+        it on the command line. To do that
+            1. Un comment the code at the bottom of this file
+            2. swiftc ./ColorGameModel.swift -o color.o
+            3. ./color.o
+            4. if you want to run the swift playground again re-comment the code
+    */
     public func doCommandLineTest(){
         print("Please press enter to run...\n\n")
         var line = readLine()
@@ -39,7 +56,7 @@ public class ColorGameModel {
         print("[1 (light)]  [2]  [3]  [4]  [5 (dark)]");
         while (true) {
             line = readLine()
-            var num: Int? = Int(line!)
+            let num: Int? = Int(line!)
             if(num != nil){
                 doGuess(index: num!)
                 
@@ -67,6 +84,17 @@ public class ColorGameModel {
         
     }
     
+    /**
+        Hand a guess to the object so that we can change the internal state
+     
+        After calling this you may want to call hasLostGame() hasWonGame()
+        or getDarkerOrLighter()
+     
+        The basic just of this is:
+            - Make a guess
+            - Check if you won or lost
+            - If the game is still valid then check if you need to guess lighter or darker
+    */
     public func doGuess(index: Int){
         if(hasLost || hasWon){
             return;
@@ -85,7 +113,7 @@ public class ColorGameModel {
                         darkerOrLighter = C_DARKER;
                     }else{
                         maxRange = index
-                        darkerOrLighter = C_LIIGHER;
+                        darkerOrLighter = C_LIGHTER;
                     }
                 }
             }else{
@@ -96,26 +124,45 @@ public class ColorGameModel {
         }
     }
     
-    public func getMinRange() -> Int{
-        return self.minRange
-    }
-    
-    public func getMaxRange() -> Int{
-        return self.maxRange;
-    }
-    
+    /**
+        Get the number of guesses that were made
+    */
     public func getNumberOfGuesses() -> Int {
         return self.numGuesses;
     }
     
+    /**
+        Get wheater or not the user should guess for a darker color or ligher color
+     
+         The basic just of this is:
+         - Make a guess
+         - Check if you won or lost
+         - If the game is still valid then check if you need to guess lighter or darker
+    */
     public func getDarkerOrLighter() -> Bool {
         return self.darkerOrLighter;
     }
     
+    /**
+        returns true if the user has lost the game
+     
+        The user loses the game if they make a guess that
+        isn't apart of the binary search algorithm. Even if the
+        user guesses the right color off the bat they
+        may lose if they didn't use binary search.
+    */
     public func hasLostGame() -> Bool{
         return hasLost
     }
     
+    /**
+        returns true if the user has won the game
+     
+        The user wins when they guess the right color
+        using the binary search algorithm. Even if the
+        user guesses the right color off the bat they
+        may lose if they didn't use binary search.
+    */
     public func hasWonGame() -> Bool{
         return hasWon
     }

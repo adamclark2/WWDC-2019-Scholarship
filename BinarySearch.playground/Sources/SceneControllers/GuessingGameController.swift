@@ -3,7 +3,18 @@ import SpriteKit
 import PlaygroundSupport
 import Foundation
 
+/**
+ A SKScene to control the guessing game
+
+ The guessing game is where the user trys to guess a number between 0 and 1,000 inclusive.
+ The user will be presented with four possible guesses and only one conforms to binary search.
+ The user loses when they don't use binary search. The user wins when they guess the right number.
+
+ Because the log base 2 of 1,000 is approximately 10 it will take the user up to 10 guesses to win.
+ */
 public class GuessingGameController: SKScene {
+    
+    /// clickDetector will detect which SKNode is clicked and call the appropreate method in the callTable
     private var clickDetector: ClickDetector<GuessingGameController> = ClickDetector()
     private var callTable: [(btnName: String, function: (GuessingGameController) -> () -> Void)] = [
         (btnName: "mainMenu", function: GuessingGameController.doMainMenu),
@@ -30,6 +41,9 @@ public class GuessingGameController: SKScene {
     private var rangeLabel: SKLabelNode?;
     private var numGuesses: SKLabelNode?;
     
+    /**
+     Tell the object the SKScene to go to when back is pressed
+     */
     public func setHomeScreen(home: HomeScreenController){
         self.homeScreen = home;
     }
@@ -83,11 +97,22 @@ public class GuessingGameController: SKScene {
         self.clickDetector.detectClick(event: event, view: view!, this: self, callTable: self.callTable);
     }
     
+    /**
+     This method is called when the Main Menu button is pressed.
+ 
+     This method will reset the color game for another round then return to the
+     home screen.
+     */
     public func doMainMenu(){
         doTryAgain()
-        self.homeScreen!.transitionTo(scene: self.homeScreen!, view: self.view)
+        self.homeScreen!.goBackToHomeScreen(view: self.view!)
     }
     
+    /**
+     This method is called when the 'Play Again' or 'Try Again' button(s) are pressed.
+     
+     This method resets the scene for another game.
+     */
     public func doTryAgain(){
         self.game!.alpha = 1
         self.lose!.alpha = 0
@@ -97,6 +122,12 @@ public class GuessingGameController: SKScene {
         self.syncModel()
     }
     
+    /**
+    This method synchronizes the model and the view
+ 
+    If the user won/lost this method will display the winning/losing prompt
+    This method will also update the button labels and guess range
+    */
     private func syncModel(){
         if(!self.model.hasWonGame() && !self.model.hasLostGame()){
             self.game!.alpha = 1
@@ -122,22 +153,34 @@ public class GuessingGameController: SKScene {
         self.numGuesses!.text = String(self.model.getStatistics().numberOfGuessesMade)
     }
     
+    /**
+    This method is called when the user presses button 1. It will do guess #1 in the model and sync the model
+    */
     public func doButton1(){
         self.model.doGuess(index: 1)
         syncModel()
         
     }
     
+    /**
+     This method is called when the user presses button 2. It will do guess #2 in the model and sync the model
+     */
     public func doButton2(){
         self.model.doGuess(index: 2)
         syncModel()
     }
     
+    /**
+     This method is called when the user presses button 3. It will do guess #3 in the model and sync the model
+     */
     public func doButton3(){
         self.model.doGuess(index: 3)
         syncModel()
     }
     
+    /**
+     This method is called when the user presses button 4. It will do guess #4 in the model and sync the model
+     */
     public func doButton4(){
         self.model.doGuess(index: 4)
         syncModel()
