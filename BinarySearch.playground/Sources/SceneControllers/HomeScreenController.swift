@@ -6,6 +6,7 @@ import Foundation
 public class HomeScreenController : SKScene {
     private var callTable: [(btnName: String, function: (HomeScreenController) -> () -> Void)] = [
         (btnName: "play", function: HomeScreenController.doPlay),
+        (btnName: "playColor", function: HomeScreenController.doPlayColor),
         (btnName: "what", function: HomeScreenController.doWhat),
         (btnName: "aboutAdam", function: HomeScreenController.doAboutAdam)
     ]
@@ -13,6 +14,7 @@ public class HomeScreenController : SKScene {
     private var aboutAdam: AboutAdamController?;
     private var whatIs: WhatIsController?;
     private var guessingGame: GuessingGameController?;
+    private var colorGame: ColorGameController?;
     
     private var clickDetector: ClickDetector<HomeScreenController> = ClickDetector()
     
@@ -22,17 +24,19 @@ public class HomeScreenController : SKScene {
         let what = self.childNode(withName: "what");
         let about = self.childNode(withName: "aboutAdam");
         self.aboutAdam = AboutAdamController(fileNamed: "About")
-        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
+        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
         self.guessingGame = GuessingGameController(fileNamed: "GuessingGame")
+        self.colorGame = ColorGameController(fileNamed: "ColorGuess")
         
         let checkArray: [SKNode?] = [
-            play, what, about, aboutAdam, whatIs, guessingGame
+            play, what, about, aboutAdam, whatIs, guessingGame, colorGame
         ]
         checkArrayForNil(errMsg: "HomeScreenController has a nil", checkArray: checkArray)
         
         self.whatIs!.setHomeScreen(home: self)
         self.aboutAdam!.setHomeScreen(home: self)
         self.guessingGame!.setHomeScreen(home: self)
+        self.colorGame!.setHomeScreen(home: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
@@ -48,11 +52,15 @@ public class HomeScreenController : SKScene {
         self.transitionTo(scene: self.guessingGame!, view: self.view)
     }
     
+    public func doPlayColor(){
+        self.transitionTo(scene: self.colorGame!, view: self.view)
+    }
+    
     public func doWhat(){
-        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch/WhatIsBinarySearch")
+        self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
         self.whatIs?.setHomeScreen(home: self)
         if(self.whatIs == nil){
-            print("An unknown error happened where a controller couldn't be loaded\nWas WhatIsBinarySearch/WhatIsBinarySearch.sks removed from disk?\n\n")
+            print("An unknown error happened where a controller couldn't be loaded\nWas WhatIsBinarySearch.sks removed from disk?\n\n")
             exit(1)
         }
         self.transitionTo(scene: self.whatIs!, view: self.view)
