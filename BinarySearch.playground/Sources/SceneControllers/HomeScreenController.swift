@@ -16,13 +16,15 @@ public class HomeScreenController : SKScene {
         (btnName: "play", function: HomeScreenController.doPlay),
         (btnName: "playColor", function: HomeScreenController.doPlayColor),
         (btnName: "what", function: HomeScreenController.doWhat),
-        (btnName: "aboutAdam", function: HomeScreenController.doAboutAdam)
+        (btnName: "aboutAdam", function: HomeScreenController.doAboutAdam),
+        (btnName: "howTo", function: HomeScreenController.doHowTo)
     ]
     
     private var aboutAdam: AboutAdamController?;
     private var whatIs: WhatIsController?;
     private var guessingGame: GuessingGameController?;
     private var colorGame: ColorGameController?;
+    private var howTo: HowToPlayController?;
     
     override public func sceneDidLoad() {
         // Init goes here
@@ -33,9 +35,10 @@ public class HomeScreenController : SKScene {
         self.whatIs = WhatIsController(fileNamed: "WhatIsBinarySearch")
         self.guessingGame = GuessingGameController(fileNamed: "GuessingGame")
         self.colorGame = ColorGameController(fileNamed: "ColorGuess")
+        self.howTo = HowToPlayController(fileNamed: "HowToPlay")
         
         let checkArray: [SKNode?] = [
-            play, what, about, aboutAdam, whatIs, guessingGame, colorGame
+            play, what, about, aboutAdam, whatIs, guessingGame, colorGame, howTo
         ]
         checkArrayForNil(errMsg: "HomeScreenController has a nil", checkArray: checkArray)
         
@@ -43,6 +46,7 @@ public class HomeScreenController : SKScene {
         self.aboutAdam!.setHomeScreen(home: self)
         self.guessingGame!.setHomeScreen(home: self)
         self.colorGame!.setHomeScreen(home: self)
+        self.howTo!.setHomeScreen(home: self)
     }
     
     public override func mouseDown(with event: NSEvent) {
@@ -101,5 +105,13 @@ public class HomeScreenController : SKScene {
     public func doAboutAdam(){
         self.aboutAdam?.setHomeScreen(home: self)
         self.transitionTo(scene: self.aboutAdam!, view: self.view)
+    }
+    
+    /**
+        Display how to play the game when the user clicks the button
+    */
+    public func doHowTo(){
+        self.howTo!.setHomeScreen(home: self)
+        self.transitionTo(scene: self.howTo!, view: self.view!)
     }
 }
