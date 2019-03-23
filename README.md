@@ -17,6 +17,10 @@ This project contains:
  Do you love/hate `generics`? or `function pointers`? Take a look at `ClickDetector.swift` 
  Have fun playing the game!  
 
+ This project will be released on my github after the submission due date of
+ `Sunday, March 24, 2019 at 5:00 p.m. PDT.` you can view the source online at
+ <https://github.com/adamclark2/WWDC-2019-Scholarship>
+
 
 # By: Adam Clark
 adam.clark2@maine.edu  
